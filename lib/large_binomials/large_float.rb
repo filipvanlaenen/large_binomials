@@ -48,4 +48,10 @@ class LargeFloat
 		product
 	end
 
+	def /(x)
+		quotient = clone
+		quotient.mantissa /= x
+		quotient
+	end
+
 end
