@@ -20,11 +20,32 @@
 
 class LargeFloat
 
-	attr_reader :exponent, :mantissa
+	attr_reader :exponent
+	attr_accessor :mantissa
 
 	def initialize(m, e = 0)
 		@mantissa = m.to_f
 		@exponent = e
+	end
+
+	def clone
+		LargeFloat.new(@mantissa, @exponent)
+	end
+
+	def normalize
+		normalization = Math.log10(@mantissa)
+		@mantissa /= 10 ** normalization
+		@exponent += normalization
+	end
+
+	def *(i)
+		product = clone
+		new_mantissa = product.mantissa * i
+		if (new_mantissa == Float::INFINITY)
+			product.normalize
+		end
+		product.mantissa *= i
+		product
 	end
 
 end

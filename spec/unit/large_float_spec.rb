@@ -41,3 +41,44 @@ describe LargeFloat, '#initialize' do
 		lf.mantissa.should be_a_kind_of(Float)
 	end
 end
+
+describe LargeFloat, '#*' do
+	def create_one
+		LargeFloat.new(1)
+	end
+
+	def multiply_by_two(lf)
+		lf * 2
+	end
+
+	it 'creates a new LargeFloat with the mantissa multiplied with the argument' do
+		one = create_one
+		two = multiply_by_two(one)
+		two.mantissa.should eq(2.to_f)
+	end
+
+	it "doesn't change the mantissa of the original LargeFloat" do
+		one = create_one
+		two = multiply_by_two(one)
+		one.mantissa.should eq(1.to_f)
+	end
+
+	it "doesn't normalize without overflow" do
+		big_number = LargeFloat.new(1E+100)
+		big_number_squared = big_number * 1E+100
+		big_number_squared.mantissa.should eq(1E+200)
+	end
+
+	it 'normalizes before overflow (mantissa part)' do
+		big_number = LargeFloat.new(1E+300, 3)
+		big_number_squared = big_number * 1E+300
+		big_number_squared.mantissa.should eq(1E+300)
+	end
+
+	it 'normalizes before overflow (exponent part)' do
+		big_number = LargeFloat.new(1E+300, 3)
+		big_number_squared = big_number * 1E+300
+		big_number_squared.exponent.should eq(303)
+	end
+
+end
