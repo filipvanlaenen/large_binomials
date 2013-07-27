@@ -18,8 +18,11 @@
 # You can find a copy of the GNU General Public License in /LICENSE
 #
 
-# Library namespace
-module LargeBinomials
-end
+require 'spec_helper'
 
-require 'large_binomials/large_float'
+describe LargeFloat, "#initialize" do
+	it "sets the mantissa correctly if there's only one argument" do
+		lf = LargeFloat.new(1.to_f)
+		lf.mantissa.should eq(1.to_f)
+	end
+end

@@ -18,8 +18,4 @@
 # You can find a copy of the GNU General Public License in /LICENSE
 #
 
-# Library namespace
-module LargeBinomials
-end
-
-require 'large_binomials/large_float'
+require 'large_binomials'

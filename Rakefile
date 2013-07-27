@@ -1,5 +1,3 @@
-# encoding: utf-8
-#
 # Ruby Library to Calculate Large Binomials
 # Copyright © 2013 Filip van Laenen <f.a.vanlaenen@ieee.org>
 #
@@ -18,8 +16,12 @@
 # You can find a copy of the GNU General Public License in /LICENSE
 #
 
-# Library namespace
-module LargeBinomials
+require 'rspec/core/rake_task'
+ 
+desc 'Default: run specs.'
+task :default => :spec
+ 
+desc "Run specs"
+RSpec::Core::RakeTask.new do |t|
+	t.pattern = "./spec/**/*_spec.rb"
 end
-
-require 'large_binomials/large_float'

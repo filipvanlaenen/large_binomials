@@ -18,8 +18,12 @@
 # You can find a copy of the GNU General Public License in /LICENSE
 #
 
-# Library namespace
-module LargeBinomials
-end
+class LargeFloat
 
-require 'large_binomials/large_float'
+	attr_reader :mantissa
+
+	def initialize(m)
+		@mantissa = m
+	end
+
+end
