@@ -20,8 +20,14 @@
 
 class Integer
 
-	def large_binomial(i)
-		1
+	def binomial(k)
+		binomial_by_product_of_divisions(k)
 	end
+
+	# Copied from http://rosettacode.org/wiki/Evaluate_binomial_coefficients#Ruby (on 7 June 2013)
+	def binomial_by_product_of_divisions(k)
+		(0...k).inject(1) do |m,i| (m * (self - i)) / (i + 1) end
+	end
+
 
 end
