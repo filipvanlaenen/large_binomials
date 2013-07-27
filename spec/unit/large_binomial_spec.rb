@@ -18,9 +18,10 @@
 # You can find a copy of the GNU General Public License in /LICENSE
 #
 
-# Library namespace
-module LargeBinomials
-end
+require 'spec_helper'
 
-require 'large_binomials/large_binomial'
-require 'large_binomials/large_float'
+describe Integer, '#large_binomial' do
+	it 'calculates the binomial C0,1 as 1' do
+		1.large_binomial(0).should eq(1)
+	end
+end

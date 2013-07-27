@@ -18,9 +18,10 @@
 # You can find a copy of the GNU General Public License in /LICENSE
 #
 
-# Library namespace
-module LargeBinomials
-end
+class Integer
 
-require 'large_binomials/large_binomial'
-require 'large_binomials/large_float'
+	def large_binomial(i)
+		1
+	end
+
+end
