@@ -76,13 +76,13 @@ describe LargeFloat, '#*' do
 	end
 
 	it 'normalizes before overflow (mantissa part)' do
-		big_number = LargeFloat.new(1E+300, 3)
+		big_number = LargeFloat.new(2E+300, 3)
 		big_number_squared = big_number * 1E+300
-		big_number_squared.mantissa.should eq(1E+300)
+		big_number_squared.mantissa.should eq(2E+300)
 	end
 
 	it 'normalizes before overflow (exponent part)' do
-		big_number = LargeFloat.new(1E+300, 3)
+		big_number = LargeFloat.new(2E+300, 3)
 		big_number_squared = big_number * 1E+300
 		big_number_squared.exponent.should eq(303)
 	end
@@ -141,5 +141,22 @@ describe LargeFloat, '#divide_by_large_float' do
 		one = create_one
 		two = divide_by_large_float_two(one)
 		one.mantissa.should eq(1.to_f)
+	end
+end
+
+describe LargeFloat, '#to_s' do
+	it 'converts 1 to a string as 1.0×10⁰' do
+		one = LargeFloat.new(1)
+		one.to_s.should eq('1.0×10⁰')
+	end
+
+	it 'converts 10 to a string as 1.0×10¹' do
+		one = LargeFloat.new(10)
+		one.to_s.should eq('1.0×10¹')
+	end
+
+	it 'converts 1¹²³⁴⁵⁶⁷⁸⁹⁰ to a string as 1.0×10¹²³⁴⁵⁶⁷⁸⁹⁰' do
+		one = LargeFloat.new(1, 1234567890)
+		one.to_s.should eq('1.0×10¹²³⁴⁵⁶⁷⁸⁹⁰')
 	end
 end

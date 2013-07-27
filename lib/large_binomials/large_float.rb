@@ -32,7 +32,7 @@ class LargeFloat
 	end
 
 	def normalize
-		normalization = Math.log10(@mantissa)
+		normalization = Math.log10(@mantissa).floor
 		@mantissa /= 10 ** normalization
 		@exponent += normalization
 	end
@@ -65,6 +65,25 @@ class LargeFloat
 		quotient = clone
 		quotient.mantissa /= n
 		quotient
+	end
+
+	def superscript(i)
+		s = i.to_s
+		s = s.gsub(/1/, '¹')
+		s = s.gsub(/2/, '²')
+		s = s.gsub(/3/, '³')
+		s = s.gsub(/4/, '⁴')
+		s = s.gsub(/5/, '⁵')
+		s = s.gsub(/6/, '⁶')
+		s = s.gsub(/7/, '⁷')
+		s = s.gsub(/8/, '⁸')
+		s = s.gsub(/9/, '⁹')
+		s.gsub(/0/, '⁰')
+	end
+
+	def to_s
+		normalize
+		"#{@mantissa}×10#{superscript(@exponent)}"
 	end
 
 end
