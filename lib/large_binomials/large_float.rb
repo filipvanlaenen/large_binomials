@@ -20,10 +20,11 @@
 
 class LargeFloat
 
-	attr_reader :mantissa
+	attr_reader :exponent, :mantissa
 
-	def initialize(m)
-		@mantissa = m
+	def initialize(m, e = 0)
+		@mantissa = m.to_f
+		@exponent = e
 	end
 
 end

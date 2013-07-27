@@ -20,9 +20,24 @@
 
 require 'spec_helper'
 
-describe LargeFloat, "#initialize" do
+describe LargeFloat, '#initialize' do
 	it "sets the mantissa correctly if there's only one argument" do
 		lf = LargeFloat.new(1.to_f)
 		lf.mantissa.should eq(1.to_f)
+	end
+
+	it "sets the exponent to zero if there's only one argument" do
+		lf = LargeFloat.new(1.to_f)
+		lf.exponent.should eq(0)
+	end
+
+	it 'sets the mantissa correctly if there are two arguments' do
+		lf = LargeFloat.new(1.to_f, 0)
+		lf.mantissa.should eq(1.to_f)
+	end
+
+	it 'converts the mantissa to a float' do
+		lf = LargeFloat.new(1)
+		lf.mantissa.should be_a_kind_of(Float)
 	end
 end
