@@ -18,72 +18,73 @@
 # You can find a copy of the GNU General Public License in /LICENSE
 #
 
-class LargeFloat
+module LargeBinomials
+	class LargeFloat
 
-	attr_accessor :exponent, :mantissa
+		attr_accessor :exponent, :mantissa
 
-	def initialize(m, e = 0)
-		@mantissa = m.to_f
-		@exponent = e
-	end
-
-	def clone
-		LargeFloat.new(@mantissa, @exponent)
-	end
-
-	def normalize
-		normalization = Math.log10(@mantissa).floor
-		@mantissa /= 10 ** normalization
-		@exponent += normalization
-	end
-
-	def *(i)
-		product = clone
-		new_mantissa = product.mantissa * i
-		if (new_mantissa == Float::INFINITY)
-			product.normalize
+		def initialize(m, e = 0)
+			@mantissa = m.to_f
+			@exponent = e
 		end
-		product.mantissa *= i
-		product
-	end
 
-	def /(x)
-		if (x.instance_of? LargeFloat)
-			divide_by_large_float(x)
-		else
-			divide_by_numeric(x)
+		def clone
+			LargeFloat.new(@mantissa, @exponent)
+		end
+
+		def normalize
+			normalization = Math.log10(@mantissa).floor
+			@mantissa /= 10 ** normalization
+			@exponent += normalization
+		end
+
+		def *(i)
+			product = clone
+			new_mantissa = product.mantissa * i
+			if (new_mantissa == Float::INFINITY)
+				product.normalize
+			end
+			product.mantissa *= i
+			product
+		end
+
+		def /(x)
+			if (x.instance_of? LargeFloat)
+				divide_by_large_float(x)
+			else
+				divide_by_numeric(x)
+			end
+		end
+
+		def divide_by_large_float(lf)
+			quotient = self / lf.mantissa
+			quotient.exponent -= lf.exponent
+			quotient
+		end
+
+		def divide_by_numeric(n)
+			quotient = clone
+			quotient.mantissa /= n
+			quotient
+		end
+
+		def superscript(i)
+			s = i.to_s
+			s = s.gsub(/1/, '¹')
+			s = s.gsub(/2/, '²')
+			s = s.gsub(/3/, '³')
+			s = s.gsub(/4/, '⁴')
+			s = s.gsub(/5/, '⁵')
+			s = s.gsub(/6/, '⁶')
+			s = s.gsub(/7/, '⁷')
+			s = s.gsub(/8/, '⁸')
+			s = s.gsub(/9/, '⁹')
+			s.gsub(/0/, '⁰')
+		end
+
+		def to_s
+			normalize
+			"#{@mantissa}×10#{superscript(@exponent)}"
 		end
 	end
-
-	def divide_by_large_float(lf)
-		quotient = self / lf.mantissa
-		quotient.exponent -= lf.exponent
-		quotient
-	end
-
-	def divide_by_numeric(n)
-		quotient = clone
-		quotient.mantissa /= n
-		quotient
-	end
-
-	def superscript(i)
-		s = i.to_s
-		s = s.gsub(/1/, '¹')
-		s = s.gsub(/2/, '²')
-		s = s.gsub(/3/, '³')
-		s = s.gsub(/4/, '⁴')
-		s = s.gsub(/5/, '⁵')
-		s = s.gsub(/6/, '⁶')
-		s = s.gsub(/7/, '⁷')
-		s = s.gsub(/8/, '⁸')
-		s = s.gsub(/9/, '⁹')
-		s.gsub(/0/, '⁰')
-	end
-
-	def to_s
-		normalize
-		"#{@mantissa}×10#{superscript(@exponent)}"
-	end
-
 end

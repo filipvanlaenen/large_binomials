@@ -20,31 +20,31 @@
 
 require 'spec_helper'
 
-describe LargeFloat, '#initialize' do
+describe LargeBinomials::LargeFloat, '#initialize' do
 	it "sets the mantissa correctly if there's only one argument" do
-		lf = LargeFloat.new(1.to_f)
+		lf = LargeBinomials::LargeFloat.new(1.to_f)
 		lf.mantissa.should eq(1.to_f)
 	end
 
 	it "sets the exponent to zero if there's only one argument" do
-		lf = LargeFloat.new(1.to_f)
+		lf = LargeBinomials::LargeFloat.new(1.to_f)
 		lf.exponent.should eq(0)
 	end
 
 	it 'sets the mantissa correctly if there are two arguments' do
-		lf = LargeFloat.new(1.to_f, 0)
+		lf = LargeBinomials::LargeFloat.new(1.to_f, 0)
 		lf.mantissa.should eq(1.to_f)
 	end
 
 	it 'converts the mantissa to a float' do
-		lf = LargeFloat.new(1)
+		lf = LargeBinomials::LargeFloat.new(1)
 		lf.mantissa.should be_a_kind_of(Float)
 	end
 end
 
-describe LargeFloat, '#*' do
+describe LargeBinomials::LargeFloat, '#*' do
 	def create_one
-		LargeFloat.new(1)
+		LargeBinomials::LargeFloat.new(1)
 	end
 
 	def multiply_by_two(lf)
@@ -64,39 +64,39 @@ describe LargeFloat, '#*' do
 	end
 
 	it "doesn't normalize without overflow (mantissa part)" do
-		big_number = LargeFloat.new(1E+100)
+		big_number = LargeBinomials::LargeFloat.new(1E+100)
 		big_number_squared = big_number * 1E+100
 		big_number_squared.mantissa.should eq(1E+200)
 	end
 
 	it "doesn't normalize without overflow (exponent part)" do
-		big_number = LargeFloat.new(1E+100)
+		big_number = LargeBinomials::LargeFloat.new(1E+100)
 		big_number_squared = big_number * 1E+100
 		big_number_squared.exponent.should eq(0)
 	end
 
 	it 'normalizes before overflow (mantissa part)' do
-		big_number = LargeFloat.new(2E+300, 3)
+		big_number = LargeBinomials::LargeFloat.new(2E+300, 3)
 		big_number_squared = big_number * 1E+300
 		big_number_squared.mantissa.should eq(2E+300)
 	end
 
 	it 'normalizes before overflow (exponent part)' do
-		big_number = LargeFloat.new(2E+300, 3)
+		big_number = LargeBinomials::LargeFloat.new(2E+300, 3)
 		big_number_squared = big_number * 1E+300
 		big_number_squared.exponent.should eq(303)
 	end
 	
 	it "doesn't change the exponent of the original LargeFloat in case of overflow" do
-		big_number = LargeFloat.new(1E+300, 3)
+		big_number = LargeBinomials::LargeFloat.new(1E+300, 3)
 		big_number_squared = big_number * 1E+300
 		big_number.exponent.should eq(3)
 	end
 end
 
-describe LargeFloat, '#divide_by_numeric' do
+describe LargeBinomials::LargeFloat, '#divide_by_numeric' do
 	def create_one
-		LargeFloat.new(1)
+		LargeBinomials::LargeFloat.new(1)
 	end
 
 	def divide_by_two(lf)
@@ -116,13 +116,13 @@ describe LargeFloat, '#divide_by_numeric' do
 	end
 end
 
-describe LargeFloat, '#divide_by_large_float' do
+describe LargeBinomials::LargeFloat, '#divide_by_large_float' do
 	def create_one
-		LargeFloat.new(1)
+		LargeBinomials::LargeFloat.new(1)
 	end
 
 	def divide_by_large_float_two(lf)
-		lf / LargeFloat.new(2, 2)
+		lf / LargeBinomials::LargeFloat.new(2, 2)
 	end
 
 	it "creates a new LargeFloat with the mantissa divided with the argument's mantissa" do
@@ -144,19 +144,19 @@ describe LargeFloat, '#divide_by_large_float' do
 	end
 end
 
-describe LargeFloat, '#to_s' do
+describe LargeBinomials::LargeFloat, '#to_s' do
 	it 'converts 1 to a string as 1.0×10⁰' do
-		one = LargeFloat.new(1)
+		one = LargeBinomials::LargeFloat.new(1)
 		one.to_s.should eq('1.0×10⁰')
 	end
 
 	it 'converts 10 to a string as 1.0×10¹' do
-		one = LargeFloat.new(10)
+		one = LargeBinomials::LargeFloat.new(10)
 		one.to_s.should eq('1.0×10¹')
 	end
 
 	it 'converts 1¹²³⁴⁵⁶⁷⁸⁹⁰ to a string as 1.0×10¹²³⁴⁵⁶⁷⁸⁹⁰' do
-		one = LargeFloat.new(1, 1234567890)
+		one = LargeBinomials::LargeFloat.new(1, 1234567890)
 		one.to_s.should eq('1.0×10¹²³⁴⁵⁶⁷⁸⁹⁰')
 	end
 end
