@@ -18,4 +18,5 @@
 # You can find a copy of the GNU General Public License in /LICENSE
 #
 
+$LOAD_PATH << 'lib'
 require 'large_binomials'
