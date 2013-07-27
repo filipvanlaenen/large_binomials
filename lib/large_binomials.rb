@@ -22,5 +22,5 @@
 module LargeBinomials
 end
 
-require 'large_binomials/large_binomial'
+require 'core_ext/integer'
 require 'large_binomials/large_float'
