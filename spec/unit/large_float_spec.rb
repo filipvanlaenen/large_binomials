@@ -92,10 +92,9 @@ describe LargeFloat, '#*' do
 		big_number_squared = big_number * 1E+300
 		big_number.exponent.should eq(3)
 	end
-
 end
 
-describe LargeFloat, '#/' do
+describe LargeFloat, '#divide_by_numeric' do
 	def create_one
 		LargeFloat.new(1)
 	end
@@ -115,5 +114,32 @@ describe LargeFloat, '#/' do
 		two = divide_by_two(one)
 		one.mantissa.should eq(1.to_f)
 	end
+end
 
+describe LargeFloat, '#divide_by_large_float' do
+	def create_one
+		LargeFloat.new(1)
+	end
+
+	def divide_by_large_float_two(lf)
+		lf / LargeFloat.new(2, 2)
+	end
+
+	it "creates a new LargeFloat with the mantissa divided with the argument's mantissa" do
+		one = create_one
+		two = divide_by_large_float_two(one)
+		two.mantissa.should eq(0.5)
+	end
+
+	it "creates a new LargeFloat with the exponent decremented with the argument's exponent" do
+		one = create_one
+		two = divide_by_large_float_two(one)
+		two.exponent.should eq(-2)
+	end
+
+	it "doesn't change the mantissa of the original LargeFloat" do
+		one = create_one
+		two = divide_by_large_float_two(one)
+		one.mantissa.should eq(1.to_f)
+	end
 end

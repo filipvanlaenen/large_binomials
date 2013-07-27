@@ -20,8 +20,7 @@
 
 class LargeFloat
 
-	attr_reader :exponent
-	attr_accessor :mantissa
+	attr_accessor :exponent, :mantissa
 
 	def initialize(m, e = 0)
 		@mantissa = m.to_f
@@ -49,8 +48,22 @@ class LargeFloat
 	end
 
 	def /(x)
+		if (x.instance_of? LargeFloat)
+			divide_by_large_float(x)
+		else
+			divide_by_numeric(x)
+		end
+	end
+
+	def divide_by_large_float(lf)
+		quotient = self / lf.mantissa
+		quotient.exponent -= lf.exponent
+		quotient
+	end
+
+	def divide_by_numeric(n)
 		quotient = clone
-		quotient.mantissa /= x
+		quotient.mantissa /= n
 		quotient
 	end
 
