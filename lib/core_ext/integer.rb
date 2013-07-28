@@ -68,4 +68,13 @@ class Integer
 		pTop / pBottom
 	end
 
+	# Float version of binomial_by_division_of_products
+	def float_binomial_by_division_of_products(k)
+		# n!/(n-k)!
+		pTop = (self-k+1 .. self).inject(1.to_f, &:*) 
+		# k!
+		pBottom = (2 .. k).inject(1.to_f, &:*)
+		pTop / pBottom
+	end
+
 end

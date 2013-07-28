@@ -130,6 +130,28 @@ describe Integer, '#float_binomial_by_product_of_divisions' do
 	end
 end
 
+describe Integer, '#float_binomial_by_division_of_products' do
+	it 'calculates the binomial C0,1 as 1.0' do
+		1.float_binomial_by_division_of_products(0).should eq(1.to_f)
+	end
+
+	it 'calculates the binomial C1,2 as 2.0' do
+		2.float_binomial_by_division_of_products(1).should eq(2.to_f)
+	end
+
+	it 'calculates the binomial C2,3 as 3.0' do
+		3.float_binomial_by_division_of_products(2).should eq(3.to_f)
+	end
+
+	it 'calculates the binomial C2,4 as 6.0' do
+		4.float_binomial_by_division_of_products(2).should eq(6.to_f)
+	end
+
+	it 'calculates the binomial C270,135 as Float::INFINITY' do
+		270.float_binomial_by_division_of_products(135).should eq(Float::INFINITY)
+	end
+end
+
 describe Integer, '#large_float_binomial_by_product_of_divisions' do
 	it 'calculates the binomial C0,1 as 1×10⁰' do
 		1.large_float_binomial_by_product_of_divisions(0).should eq(LargeBinomials::LargeFloat.new(1))
