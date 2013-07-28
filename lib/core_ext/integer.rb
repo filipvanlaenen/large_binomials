@@ -58,4 +58,14 @@ class Integer
 			(m * (self - i)) / (i + 1)
 		end
 	end
+
+	# From http://rosettacode.org/wiki/Evaluate_binomial_coefficients#Ruby (on 7 June 2013)
+	def binomial_by_division_of_products(k)
+		# n!/(n-k)!
+		pTop = (self-k+1 .. self).inject(1, &:*) 
+		# k!
+		pBottom = (2 .. k).inject(1, &:*)
+		pTop / pBottom
+	end
+
 end
