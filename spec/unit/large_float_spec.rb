@@ -160,3 +160,33 @@ describe LargeBinomials::LargeFloat, '#to_s' do
 		one.to_s.should eq('1.0×10¹²³⁴⁵⁶⁷⁸⁹⁰')
 	end
 end
+
+describe LargeBinomials::LargeFloat, '#==' do
+	it 'returns false when the other object is not a LargeFloat' do
+		(LargeBinomials::LargeFloat.new(1) == 1).should be_false
+	end
+
+	it 'returns true when mantissa and exponent are equal' do
+		first_one = LargeBinomials::LargeFloat.new(1)
+		second_one = LargeBinomials::LargeFloat.new(1)
+		(first_one == second_one).should be_true
+	end
+
+	it 'returns true when mantissa and exponent are equal after normalization' do
+		first_ten = LargeBinomials::LargeFloat.new(0.1, 2)
+		second_ten = LargeBinomials::LargeFloat.new(10, 0)
+		(first_ten == second_ten).should be_true
+	end
+
+	it 'returns false when mantissas are different' do
+		one = LargeBinomials::LargeFloat.new(1)
+		two = LargeBinomials::LargeFloat.new(2)
+		(one == two).should be_false
+	end
+
+	it 'returns false when exponents are different' do
+		one = LargeBinomials::LargeFloat.new(1, 0)
+		ten = LargeBinomials::LargeFloat.new(1, 1)
+		(one == ten).should be_false
+	end
+end

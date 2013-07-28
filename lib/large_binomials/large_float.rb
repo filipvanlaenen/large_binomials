@@ -86,5 +86,13 @@ module LargeBinomials
 			normalize
 			"#{@mantissa}×10#{superscript(@exponent)}"
 		end
+
+		def ==(lf)
+			if (lf.instance_of? LargeFloat)
+				normalize
+				lf.normalize
+				(@mantissa == lf.mantissa) && (@exponent == lf.exponent)
+			end
+		end
 	end
 end
