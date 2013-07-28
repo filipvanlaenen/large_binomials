@@ -51,4 +51,11 @@ class Integer
 			(m * (self - i)) / (i + 1)
 		end
 	end
+
+	# Float version of binomial_by_product_of_divisions
+	def float_binomial_by_product_of_divisions(k)
+		(0...k).inject(1.to_f) do |m,i|
+			(m * (self - i)) / (i + 1)
+		end
+	end
 end
