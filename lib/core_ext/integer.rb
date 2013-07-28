@@ -68,6 +68,24 @@ class Integer
 		pTop / pBottom
 	end
 
+	# Parallel version of binomial_by_division_of_products
+	# Note that threads in Ruby 1.9 don't spread over multiple processors, so
+	# due to context switching this parallel version will often be a bit slower
+	# than the sequential one.
+	def binomial_by_division_of_parallel_products(k)
+		# n!/(n-k)!
+		top_thread = Thread.new do
+			Thread.current[:output] = (self-k+1 .. self).inject(1, &:*) 
+		end
+		# k!
+		bottom_thread = Thread.new do
+			Thread.current[:output] = (2 .. k).inject(1, &:*)
+		end
+		top_thread.join
+		bottom_thread.join
+		top_thread[:output] / bottom_thread[:output]
+	end
+
 	# LargeFloat version of binomial_by_division_of_products
 	def large_float_binomial_by_division_of_products(k)
 		# n!/(n-k)!

@@ -86,6 +86,28 @@ describe Integer, '#binomial_by_division_of_products' do
 	end
 end
 
+describe Integer, '#binomial_by_division_of_parallel_products' do
+	it 'calculates the binomial C0,1 as 1' do
+		1.binomial_by_division_of_parallel_products(0).should eq(1)
+	end
+
+	it 'calculates the binomial C1,2 as 2' do
+		2.binomial_by_division_of_parallel_products(1).should eq(2)
+	end
+
+	it 'calculates the binomial C2,3 as 3' do
+		3.binomial_by_division_of_parallel_products(2).should eq(3)
+	end
+
+	it 'calculates the binomial C2,4 as 6' do
+		4.binomial_by_division_of_parallel_products(2).should eq(6)
+	end
+
+	it 'calculates the binomial C1030,515 as 285964137299780816375713003417892828985047376491079895916065830932808184515508623336290716027603487838840658378528491902852969839049878057252288352997125670272624219209393564328660099438209732411401014699912025370547761703640450600215234966704145601511388368027664919136794617311260529388699426829733229057400' do
+		1030.binomial_by_division_of_parallel_products(515).should eq(285964137299780816375713003417892828985047376491079895916065830932808184515508623336290716027603487838840658378528491902852969839049878057252288352997125670272624219209393564328660099438209732411401014699912025370547761703640450600215234966704145601511388368027664919136794617311260529388699426829733229057400)
+	end
+end
+
 describe Integer, '#breaking_binomial_by_product_of_divisions' do
 	it 'calculates the binomial C0,1 as 1' do
 		1.breaking_binomial_by_product_of_divisions(0).should eq(1)
