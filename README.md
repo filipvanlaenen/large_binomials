@@ -25,7 +25,7 @@ Usage
 License
 -------
 
-Library to calculate large binomials
+Library to calculate large binomials  
 Copyright (C) 2013  Filip van Laenen <f.a.vanlaenen@ieee.org>
 
 This program is free software: you can redistribute it and/or modify
