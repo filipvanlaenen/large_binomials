@@ -22,7 +22,8 @@ Do the following to install this gem:
 Usage
 -----
 
-The following code shows how to use the library:
+The following code (also included in the project as
+`test_performance_binomial.rb`) shows how to use the library:
 
 	# encoding: utf-8
 	#
