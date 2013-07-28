@@ -37,9 +37,9 @@ describe Integer, '#binomial' do
 		4.binomial(2).should eq(6)
 	end
 
-#	it 'calculates the binomial C1030,515 as 2.859641372997808×10³⁰⁸' do
-#		1030.binomial(515).should eq(LargeBinomials::LargeFloat.new(2.859641372997808, 308))
-#	end
+	it 'calculates the binomial C1030,515 as 2.859641372997808×10³⁰⁸' do
+		1030.binomial(515).should eq(LargeBinomials::LargeFloat.new(2.859641372997808, 308))
+	end
 end
 
 describe Integer, '#binomial_by_product_of_divisions' do

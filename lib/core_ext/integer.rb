@@ -21,11 +21,11 @@
 class Integer
 
 	def binomial(k)
-		t = breaking_binomial_by_product_of_divisions(k)
-		if (t == nil)
-			t = large_float_binomial_by_product_of_divisions(k)
+		begin
+			breaking_binomial_by_product_of_divisions(k)
+		rescue
+			large_float_binomial_by_product_of_divisions(k)
 		end
-		t
 	end
 
 	# Copied from http://rosettacode.org/wiki/Evaluate_binomial_coefficients#Ruby (on 7 June 2013)
