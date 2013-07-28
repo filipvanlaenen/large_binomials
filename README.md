@@ -3,6 +3,21 @@ large_binomials
 
 Library to calculate large binomials.
 
+This gem mixes in some general methods to calculate binomials to `Integer`. In
+addition, it also mixes in some methods to calculate large binomials, with
+“large” being defined as having a result greater than `Float.MAX`. The main
+`Integer#binomial(k)` method is then adjusted such that when the result is less
+than or equal to `Float.MAX`, an `Integer` is returned, and a
+`LargeBinomials::LargeFloat` otherwise. Continuing to use `Integer` makes the
+calculation of binomials more and more expensive as the result becomes larger
+and larger.
+
+Installation
+------------
+
+Usage
+-----
+
 License
 -------
 
