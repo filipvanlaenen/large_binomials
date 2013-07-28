@@ -87,23 +87,23 @@ describe Integer, '#breaking_binomial_by_product_of_divisions' do
 end
 
 describe Integer, '#large_float_binomial_by_product_of_divisions' do
-#	it 'calculates the binomial C0,1 as 1×10⁰' do
-#		1.large_float_binomial_by_product_of_divisions(0).should eq(LargeBinomials::LargeFloat.new(1))
-#	end
+	it 'calculates the binomial C0,1 as 1×10⁰' do
+		1.large_float_binomial_by_product_of_divisions(0).should eq(LargeBinomials::LargeFloat.new(1))
+	end
 
-#	it 'calculates the binomial C1,2 as 2×10⁰' do
-#		2.large_float_binomial_by_product_of_divisions(1).should eq(LargeBinomials::LargeFloat.new(2))
-#	end
+	it 'calculates the binomial C1,2 as 2×10⁰' do
+		2.large_float_binomial_by_product_of_divisions(1).should eq(LargeBinomials::LargeFloat.new(2))
+	end
 
-#	it 'calculates the binomial C2,3 as 3×10⁰' do
-#		3.large_float_binomial_by_product_of_divisions(2).should eq(LargeBinomials::LargeFloat.new(3))
-#	end
+	it 'calculates the binomial C2,3 as 3×10⁰' do
+		3.large_float_binomial_by_product_of_divisions(2).should eq(LargeBinomials::LargeFloat.new(3))
+	end
 
-#	it 'calculates the binomial C2,4 as 6×10⁰' do
-#		4.large_float_binomial_by_product_of_divisions(2).should eq(LargeBinomials::LargeFloat.new(6))
-#	end
+	it 'calculates the binomial C2,4 as 6×10⁰' do
+		4.large_float_binomial_by_product_of_divisions(2).should eq(LargeBinomials::LargeFloat.new(6))
+	end
 
-#	it 'calculates the binomial C1030,515 as 2.859641372997808×10³⁰⁸' do
-#		1030.large_float_binomial_by_product_of_divisions(515).should eq(LargeBinomials::LargeFloat.new(2.859641372997808, 308))
-#	end
+	it 'calculates the binomial C1030,515 as 2.859641372997808×10³⁰⁸' do
+		1030.large_float_binomial_by_product_of_divisions(515).should eq(LargeBinomials::LargeFloat.new(2.859641372997808, 308))
+	end
 end
