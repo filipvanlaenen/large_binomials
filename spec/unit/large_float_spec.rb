@@ -232,7 +232,7 @@ describe LargeBinomials::LargeFloat, '#==' do
 
 	it 'returns true when mantissa and exponent are equal after normalization' do
 		first_ten = LargeBinomials::LargeFloat.new(0.1, 2)
-		second_ten = LargeBinomials::LargeFloat.new(10, 0)
+		second_ten = LargeBinomials::LargeFloat.new(10)
 		(first_ten == second_ten).should be_true
 	end
 
@@ -243,8 +243,80 @@ describe LargeBinomials::LargeFloat, '#==' do
 	end
 
 	it 'returns false when exponents are different' do
-		one = LargeBinomials::LargeFloat.new(1, 0)
+		one = LargeBinomials::LargeFloat.new(1)
 		ten = LargeBinomials::LargeFloat.new(1, 1)
 		(one == ten).should be_false
+	end
+end
+
+describe LargeBinomials::LargeFloat, '#+' do
+	it 'creates a new LargeFloat with the exponent of the largest LargeFloat if the second exponent is greater' do
+		one = LargeBinomials::LargeFloat.new(1)
+		ten = LargeBinomials::LargeFloat.new(1, 1)
+		eleven = one + ten
+		eleven.exponent.should eq(1)
+	end
+
+	it 'creates a new LargeFloat with the exponent of the largest LargeFloat if the first exponent is greater' do
+		one = LargeBinomials::LargeFloat.new(1)
+		ten = LargeBinomials::LargeFloat.new(1, 1)
+		eleven = ten + one
+		eleven.exponent.should eq(1)
+	end
+
+	it 'creates a new LargeFloat with the exponent of the largest LargeFloat normalized if the second exponent is greater and in case of overflow' do
+		max_float = LargeBinomials::LargeFloat.new(Float::MAX)
+		max_float_times_ten = LargeBinomials::LargeFloat.new(Float::MAX, 1)
+		max_float_times_eleven = max_float + max_float_times_ten
+		max_float_times_eleven.exponent.should eq(Math.log10(Float::MAX).floor + 1)
+	end
+
+	it 'creates a new LargeFloat with the exponent of the largest LargeFloat normalized if the first exponent is greater and in case of overflow' do
+		max_float = LargeBinomials::LargeFloat.new(Float::MAX)
+		max_float_times_ten = LargeBinomials::LargeFloat.new(Float::MAX, 1)
+		max_float_times_eleven = max_float_times_ten + max_float
+		max_float_times_eleven.exponent.should eq(Math.log10(Float::MAX).floor + 1)
+	end
+
+	it 'creates a new LargeFloat with the mantissa the sum of the mantissas relative to the exponents if the second exponent is greater' do
+		one = LargeBinomials::LargeFloat.new(1)
+		ten = LargeBinomials::LargeFloat.new(1, 1)
+		eleven = one + ten
+		eleven.mantissa.should eq(1.1)
+	end
+
+	it 'creates a new LargeFloat with the mantissa the sum of the mantissas relative to the exponents if the first exponent is greater' do
+		one = LargeBinomials::LargeFloat.new(1)
+		ten = LargeBinomials::LargeFloat.new(1, 1)
+		eleven = ten + one
+		eleven.mantissa.should eq(1.1)
+	end
+
+	it 'creates a new LargeFloat with the mantissa the sum of the mantissas relative to the exponents normalized if the second exponent is greater and in case of overflow' do
+		max_float = LargeBinomials::LargeFloat.new(Float::MAX)
+		max_float_times_ten = LargeBinomials::LargeFloat.new(Float::MAX, 1)
+		max_float_times_eleven = max_float + max_float_times_ten
+		max_mantissa = Float::MAX / (10 ** Math.log10(Float::MAX).floor)
+		max_float_times_eleven.mantissa.should eq(max_mantissa + max_mantissa / 10)
+	end
+
+	it 'creates a new LargeFloat with the mantissa the sum of the mantissas relative to the exponents normalized if the first exponent is greater and in case of overflow' do
+		max_float = LargeBinomials::LargeFloat.new(Float::MAX)
+		max_float_times_ten = LargeBinomials::LargeFloat.new(Float::MAX, 1)
+		max_float_times_eleven = max_float_times_ten + max_float
+		max_mantissa = Float::MAX / (10 ** Math.log10(Float::MAX).floor)
+		max_float_times_eleven.mantissa.should eq(max_mantissa + max_mantissa / 10)
+	end
+
+	it 'creates a new LargeFloat equal to the first LargeFloat if the second is too small to be added' do
+		one = LargeBinomials::LargeFloat.new(1)
+		below_accuracy = LargeBinomials::LargeFloat.new(1, -Math.log10(Float::MAX).floor - 1)
+		(one + below_accuracy).should eq one
+	end
+
+	it 'creates a new LargeFloat equal to the first LargeFloat if the first is too small to be added' do
+		one = LargeBinomials::LargeFloat.new(1)
+		below_accuracy = LargeBinomials::LargeFloat.new(1, -Math.log10(Float::MAX).floor - 1)
+		(below_accuracy + one).should eq one
 	end
 end

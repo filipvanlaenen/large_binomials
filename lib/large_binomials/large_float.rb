@@ -82,6 +82,20 @@ module LargeBinomials
 			quotient
 		end
 
+		def +(lf)
+			if (@exponent < lf.exponent)
+				lf + self
+			else
+				new_mantissa = @mantissa + lf.mantissa * (10 ** (lf.exponent - @exponent))
+				if (new_mantissa == Float::INFINITY)
+					normalize
+					lf.normalize
+				end
+				new_mantissa = @mantissa + lf.mantissa * (10 ** (lf.exponent - @exponent))
+				LargeFloat.new(new_mantissa, @exponent)
+			end
+		end
+
 		def superscript(i)
 			s = i.to_s
 			s = s.gsub(/1/, '¹')
