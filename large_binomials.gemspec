@@ -20,7 +20,7 @@
 
 Gem::Specification.new do |gem|
 	gem.name = 'large_binomials'
-	gem.version = '0.9'
+	gem.version = '0.9.1alpha1'
 	gem.authors = [ 'Filip van Laenen' ]
 	gem.email = [ 'f.a.vanlaenen@ieee.org' ]
 

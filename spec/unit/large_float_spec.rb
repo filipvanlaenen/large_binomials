@@ -42,7 +42,7 @@ describe LargeBinomials::LargeFloat, '#initialize' do
 	end
 end
 
-describe LargeBinomials::LargeFloat, '#*' do
+describe LargeBinomials::LargeFloat, '#multiply_by_numeric' do
 	def create_one
 		LargeBinomials::LargeFloat.new(1)
 	end
@@ -90,6 +90,64 @@ describe LargeBinomials::LargeFloat, '#*' do
 	it "doesn't change the exponent of the original LargeFloat in case of overflow" do
 		big_number = LargeBinomials::LargeFloat.new(1E+300, 3)
 		big_number_squared = big_number * 1E+300
+		big_number.exponent.should eq(3)
+	end
+end
+
+describe LargeBinomials::LargeFloat, '#multiply_by_large_float' do
+	def create_thirty
+		LargeBinomials::LargeFloat.new(3, 1)
+	end
+
+	def multiply_by_two_hundred(lf)
+		lf * LargeBinomials::LargeFloat.new(2, 2)
+	end
+
+	it 'creates a new LargeFloat with the mantissas multiplied together' do
+		thirty = create_thirty
+		six_thousand = multiply_by_two_hundred(thirty)
+		six_thousand.mantissa.should eq(6.to_f)
+	end
+
+	it 'creates a new LargeFloat with the exponents added together' do
+		thirty = create_thirty
+		six_thousand = multiply_by_two_hundred(thirty)
+		six_thousand.exponent.should eq(3)
+	end
+
+	it "doesn't change the mantissa of the original LargeFloat" do
+		thirty = create_thirty
+		six_thousand = multiply_by_two_hundred(thirty)
+		thirty.mantissa.should eq(3.to_f)
+	end
+
+	it "doesn't normalize without overflow (mantissa part)" do
+		big_number = LargeBinomials::LargeFloat.new(1E+100, 10)
+		big_number_squared = big_number * big_number
+		big_number_squared.mantissa.should eq(1E+200)
+	end
+
+	it "doesn't normalize without overflow (exponent part)" do
+		big_number = LargeBinomials::LargeFloat.new(1E+100, 10)
+		big_number_squared = big_number * big_number
+		big_number_squared.exponent.should eq(20)
+	end
+
+	it 'normalizes before overflow (mantissa part)' do
+		big_number = LargeBinomials::LargeFloat.new(2E+300, 3)
+		big_number_squared = big_number * big_number
+		big_number_squared.mantissa.should eq(4E+300)
+	end
+
+	it 'normalizes before overflow (exponent part)' do
+		big_number = LargeBinomials::LargeFloat.new(2E+300, 3)
+		big_number_squared = big_number * big_number
+		big_number_squared.exponent.should eq(306)
+	end
+	
+	it "doesn't change the exponent of the original LargeFloat in case of overflow" do
+		big_number = LargeBinomials::LargeFloat.new(1E+300, 3)
+		big_number_squared = big_number * big_number
 		big_number.exponent.should eq(3)
 	end
 end

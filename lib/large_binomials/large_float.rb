@@ -38,7 +38,21 @@ module LargeBinomials
 			@exponent += normalization
 		end
 
-		def *(i)
+		def *(x)
+			if (x.instance_of? LargeFloat)
+				multiply_with_large_float(x)
+			else
+				multiply_with_numeric(x)
+			end
+		end
+
+		def multiply_with_large_float(lf)
+			product = self * lf.mantissa
+			product.exponent += lf.exponent
+			product
+		end
+
+		def multiply_with_numeric(i)
 			product = clone
 			new_mantissa = product.mantissa * i
 			if (new_mantissa == Float::INFINITY)
