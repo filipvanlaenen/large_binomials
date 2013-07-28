@@ -14,6 +14,7 @@ Installation
 ------------
 
 Do the following to install this gem:
+
 1. Make a clone of the repository
 2. Build the gem: `gem build large_binomials.gemspec`
 3. Install the gem: `gem install ./large_binomials-0.1alpha1.gem`
