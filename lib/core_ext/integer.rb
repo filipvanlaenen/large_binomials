@@ -68,6 +68,15 @@ class Integer
 		pTop / pBottom
 	end
 
+	# LargeFloat version of binomial_by_division_of_products
+	def large_float_binomial_by_division_of_products(k)
+		# n!/(n-k)!
+		pTop = (self-k+1 .. self).inject(LargeBinomials::LargeFloat.new(1), &:*) 
+		# k!
+		pBottom = (2 .. k).inject(LargeBinomials::LargeFloat.new(1), &:*)
+		pTop / pBottom
+	end
+
 	# Float version of binomial_by_division_of_products
 	def float_binomial_by_division_of_products(k)
 		# n!/(n-k)!
