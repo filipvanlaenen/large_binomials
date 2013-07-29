@@ -20,6 +20,7 @@
 
 module LargeBinomials
 	class LargeFloat
+		include Comparable
 
 		attr_accessor :exponent, :mantissa
 
@@ -83,11 +84,11 @@ module LargeBinomials
 		end
 
 		def +(lf)
-			if (@exponent < lf.exponent)
+			if @exponent < lf.exponent
 				lf + self
 			else
 				new_mantissa = @mantissa + lf.mantissa * (10 ** (lf.exponent - @exponent))
-				if (new_mantissa == Float::INFINITY)
+				if new_mantissa == Float::INFINITY
 					normalize
 					lf.normalize
 				end
@@ -115,11 +116,13 @@ module LargeBinomials
 			"#{@mantissa}×10#{superscript(@exponent)}"
 		end
 
-		def ==(lf)
-			if (lf.instance_of? LargeFloat)
-				normalize
-				lf.normalize
-				(@mantissa == lf.mantissa) && (@exponent == lf.exponent)
+		def <=>(lf)
+			normalize
+			lf.normalize
+			if @exponent == lf.exponent
+				@mantissa - lf.mantissa
+			else
+				@exponent - lf.exponent
 			end
 		end
 	end

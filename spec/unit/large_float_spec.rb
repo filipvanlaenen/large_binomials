@@ -219,36 +219,6 @@ describe LargeBinomials::LargeFloat, '#to_s' do
 	end
 end
 
-describe LargeBinomials::LargeFloat, '#==' do
-	it 'returns false when the other object is not a LargeFloat' do
-		(LargeBinomials::LargeFloat.new(1) == 1).should be_false
-	end
-
-	it 'returns true when mantissa and exponent are equal' do
-		first_one = LargeBinomials::LargeFloat.new(1)
-		second_one = LargeBinomials::LargeFloat.new(1)
-		(first_one == second_one).should be_true
-	end
-
-	it 'returns true when mantissa and exponent are equal after normalization' do
-		first_ten = LargeBinomials::LargeFloat.new(0.1, 2)
-		second_ten = LargeBinomials::LargeFloat.new(10)
-		(first_ten == second_ten).should be_true
-	end
-
-	it 'returns false when mantissas are different' do
-		one = LargeBinomials::LargeFloat.new(1)
-		two = LargeBinomials::LargeFloat.new(2)
-		(one == two).should be_false
-	end
-
-	it 'returns false when exponents are different' do
-		one = LargeBinomials::LargeFloat.new(1)
-		ten = LargeBinomials::LargeFloat.new(1, 1)
-		(one == ten).should be_false
-	end
-end
-
 describe LargeBinomials::LargeFloat, '#+' do
 	it 'creates a new LargeFloat with the exponent of the largest LargeFloat if the second exponent is greater' do
 		one = LargeBinomials::LargeFloat.new(1)
@@ -318,5 +288,37 @@ describe LargeBinomials::LargeFloat, '#+' do
 		one = LargeBinomials::LargeFloat.new(1)
 		below_accuracy = LargeBinomials::LargeFloat.new(1, -Math.log10(Float::MAX).floor - 1)
 		(below_accuracy + one).should eq one
+	end
+end
+
+describe LargeBinomials::LargeFloat, '#<=>' do
+	it 'returns 0 (equal) when mantissa and exponent are equal' do
+		first_one = LargeBinomials::LargeFloat.new(1)
+		second_one = LargeBinomials::LargeFloat.new(1)
+		(first_one == second_one).should be_true
+	end
+
+	it 'returns 0 (equal) when mantissa and exponent are equal after normalization' do
+		first_ten = LargeBinomials::LargeFloat.new(0.1, 2)
+		second_ten = LargeBinomials::LargeFloat.new(10)
+		(first_ten == second_ten).should be_true
+	end
+
+	it 'returns -1 (less than) when the first mantissa is smaller than the second, exponents being equal' do
+		one = LargeBinomials::LargeFloat.new(1)
+		two = LargeBinomials::LargeFloat.new(2)
+		(one < two).should be_true
+	end
+
+	it 'returns -1 (less than) when the first exponent is smaller than the second' do
+		one = LargeBinomials::LargeFloat.new(1)
+		ten = LargeBinomials::LargeFloat.new(1, 1)
+		(one < ten).should be_true
+	end
+
+	it 'returns -1 (less than) when the first exponent is smaller than the second after normalization' do
+		one = LargeBinomials::LargeFloat.new(0.01, 2)
+		ten = LargeBinomials::LargeFloat.new(1, 1)
+		(one < ten).should be_true
 	end
 end
