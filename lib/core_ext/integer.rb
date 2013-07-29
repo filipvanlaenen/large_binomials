@@ -106,7 +106,7 @@ class Integer
 
 	# Copied from http://www.brpreiss.com/books/opus8/html/page459.html (on 7 June 2013)
 	def binomial_by_pascals_triangle(k)
-		b = [0] * (self + 1)
+		b = []
 		b[0] = 1
 		for i in 1 .. self
 			b[i] = 1
@@ -116,7 +116,7 @@ class Integer
 				j -= 1
 			end
 		end
-		return b[k]
+		b[k]
 	end
 
 end
