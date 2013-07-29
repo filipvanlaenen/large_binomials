@@ -38,7 +38,7 @@ class Integer
 	# Breaking version of binomial_by_product_of_divisions
 	def breaking_binomial_by_product_of_divisions(k)
 		(0...k).inject(1) do |m,i|
-			if (m > Float::MAX)
+			if m > Float::MAX
 				raise 'Result larger than Float::MAX'
 			end
 			(m * (self - i)) / (i + 1)
