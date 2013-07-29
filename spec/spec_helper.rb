@@ -20,3 +20,13 @@
 
 $LOAD_PATH << 'lib'
 require 'large_binomials'
+
+require 'timeout'
+
+RSpec.configure do |config|
+  config.around do |example|
+     Timeout.timeout(1) do
+       example.run
+     end
+  end
+end
