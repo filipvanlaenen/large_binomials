@@ -88,13 +88,11 @@ module LargeBinomials
 		end
 
 		def +(lf)
+			normalize
+			lf.normalize
 			if @exponent < lf.exponent
 				lf + self
 			else
-				if new_mantissa_for_addition(lf) == Float::INFINITY
-					normalize
-					lf.normalize
-				end
 				LargeFloat.new(new_mantissa_for_addition(lf), @exponent)
 			end
 		end
