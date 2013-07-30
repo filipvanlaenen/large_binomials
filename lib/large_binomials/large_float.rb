@@ -84,7 +84,7 @@ module LargeBinomials
 		end
 
 		def new_mantissa_for_addition(lf)
-			@mantissa + lf.mantissa * (10 ** (lf.exponent - @exponent))
+			@mantissa + lf.mantissa * 10 ** (lf.exponent - @exponent)
 		end
 
 		def +(lf)
