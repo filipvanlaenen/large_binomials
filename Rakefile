@@ -21,7 +21,25 @@ require 'rspec/core/rake_task'
 desc 'Default: run specs.'
 task :default => :spec
  
-desc "Run specs"
+desc 'Run specs'
 RSpec::Core::RakeTask.new do |t|
 	t.pattern = "./spec/**/*_spec.rb"
+end
+
+def find_integer_methods
+	require_relative 'lib/core_ext/integer'
+	integer_methods = Integer.instance_methods(false)
+	integer_methods.select!{ | m | 1.method(m).source_location != nil }
+	integer_methods.select!{ | m | 1.method(m).source_location[0].include? 'large_binomials'}
+	integer_methods.collect{ | m | "::Integer##{m}"}
+end
+
+desc 'Run Mutant'
+task :mutant do
+	require 'mutant'
+	find_integer_methods
+	status = Mutant::CLI.run(['::LargeBinomials*', find_integer_methods, '--rspec-unit'].flatten)
+	if status.nonzero?
+		abort 'Mutant task is not successful'
+	end
 end
