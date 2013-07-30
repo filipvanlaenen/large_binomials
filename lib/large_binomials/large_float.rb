@@ -56,7 +56,7 @@ module LargeBinomials
 		def multiply_with_numeric(i)
 			product = clone
 			new_mantissa = product.mantissa * i
-			if (new_mantissa == Float::INFINITY)
+			if new_mantissa == Float::INFINITY
 				product.normalize
 			end
 			product.mantissa *= i
@@ -83,17 +83,19 @@ module LargeBinomials
 			quotient
 		end
 
+		def new_mantissa_for_addition(lf)
+			@mantissa + lf.mantissa * (10 ** (lf.exponent - @exponent))
+		end
+
 		def +(lf)
 			if @exponent < lf.exponent
 				lf + self
 			else
-				new_mantissa = @mantissa + lf.mantissa * (10 ** (lf.exponent - @exponent))
-				if new_mantissa == Float::INFINITY
+				if new_mantissa_for_addition(lf) == Float::INFINITY
 					normalize
 					lf.normalize
 				end
-				new_mantissa = @mantissa + lf.mantissa * (10 ** (lf.exponent - @exponent))
-				LargeFloat.new(new_mantissa, @exponent)
+				LargeFloat.new(new_mantissa_for_addition(lf), @exponent)
 			end
 		end
 
