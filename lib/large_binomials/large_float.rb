@@ -34,9 +34,7 @@ module LargeBinomials
 		end
 
 		def normalize
-			if (@mantissa == 0)
-				@exponent = 0
-			else
+			unless (@mantissa == 0)
 				normalization = Math.log10(@mantissa).floor
 				@mantissa /= 10 ** normalization
 				@exponent += normalization
