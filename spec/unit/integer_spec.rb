@@ -148,7 +148,7 @@ describe Integer, '#breaking_binomial_by_product_of_divisions' do
 	end
 
 	it 'raises an error when calculating the binomial C1030,515' do
-		 expect { 1030.breaking_binomial_by_product_of_divisions(515) }.to raise_error('Result larger than Float::MAX')
+		 1030.breaking_binomial_by_product_of_divisions(515).should be_nil
 	end
 end
 

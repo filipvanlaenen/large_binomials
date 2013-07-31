@@ -21,10 +21,11 @@
 class Integer
 
 	def binomial(k)
-		begin
-			breaking_binomial_by_product_of_divisions(k)
-		rescue
+		binomial = breaking_binomial_by_product_of_divisions(k)
+		if binomial == nil
 			large_float_binomial_by_product_of_divisions(k)
+		else
+			binomial
 		end
 	end
 
@@ -39,7 +40,7 @@ class Integer
 	def breaking_binomial_by_product_of_divisions(k)
 		(0...k).inject(1) do |m,i|
 			if m > Float::MAX
-				raise 'Result larger than Float::MAX'
+				return nil
 			end
 			(m * (self - i)) / (i + 1)
 		end
