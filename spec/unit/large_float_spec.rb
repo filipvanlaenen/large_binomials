@@ -220,6 +220,18 @@ describe LargeBinomials::LargeFloat, '#to_s' do
 end
 
 describe LargeBinomials::LargeFloat, '#+' do
+	it 'creates a new LargeFloat with the same value as the first one when 0 is added' do
+		zero = LargeBinomials::LargeFloat.new(0)	
+		one = LargeBinomials::LargeFloat.new(1)
+		(one + zero).should eq(one)
+	end
+
+	it 'creates a new LargeFloat with the same value as the second one when added to 0' do
+		zero = LargeBinomials::LargeFloat.new(0)	
+		one = LargeBinomials::LargeFloat.new(1)
+		(zero + one).should eq(one)
+	end
+
 	it 'creates a new LargeFloat with the exponent of the largest LargeFloat if the second exponent is greater' do
 		one = LargeBinomials::LargeFloat.new(1)
 		ten = LargeBinomials::LargeFloat.new(1, 1)
