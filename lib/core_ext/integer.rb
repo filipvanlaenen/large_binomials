@@ -20,6 +20,10 @@
 
 class Integer
 
+	def to_lf
+		LargeBinomials::LargeFloat.new(self)
+	end
+
 	def binomial(k)
 		binomial = breaking_binomial_by_product_of_divisions(k)
 		if binomial == nil

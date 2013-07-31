@@ -239,3 +239,9 @@ describe Integer, '#large_float_binomial_by_division_of_products' do
 		1030.large_float_binomial_by_division_of_products(515).should eq(LargeBinomials::LargeFloat.new(2.859641372997804, 308))
 	end
 end
+
+describe Integer, '#to_lf' do
+	it 'returns a LargeFloat with the Integer as mantissa, and exponent 0' do
+		1.to_lf.should eq(LargeBinomials::LargeFloat.new(1))
+	end
+end
