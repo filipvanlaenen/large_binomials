@@ -52,7 +52,7 @@ class Integer
 
 	# LargeFloat version of binomial_by_product_of_divisions
 	def large_float_binomial_by_product_of_divisions(k)
-		(0...k).inject(LargeBinomials::LargeFloat.new(1)) do |m,i|
+		(0...k).inject(1.to_lf) do |m,i|
 			(m * (self - i)) / (i + 1)
 		end
 	end
@@ -94,9 +94,9 @@ class Integer
 	# LargeFloat version of binomial_by_division_of_products
 	def large_float_binomial_by_division_of_products(k)
 		# n!/(n-k)!
-		pTop = (self-k+1 .. self).inject(LargeBinomials::LargeFloat.new(1), &:*) 
+		pTop = (self-k+1 .. self).inject(1.to_lf, &:*) 
 		# k!
-		pBottom = (2 .. k).inject(LargeBinomials::LargeFloat.new(1), &:*)
+		pBottom = (2 .. k).inject(1.to_lf, &:*)
 		pTop / pBottom
 	end
 

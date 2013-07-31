@@ -43,23 +43,13 @@ describe LargeBinomials::LargeFloat, '#initialize' do
 end
 
 describe LargeBinomials::LargeFloat, '#multiply_by_numeric' do
-	def create_one
-		LargeBinomials::LargeFloat.new(1)
-	end
-
-	def multiply_by_two(lf)
-		lf * 2
-	end
-
 	it 'creates a new LargeFloat with the mantissa multiplied with the argument' do
-		one = create_one
-		two = multiply_by_two(one)
-		two.mantissa.should eq(2.to_f)
+		(1.to_lf * 2).mantissa.should eq(2.to_f)
 	end
 
 	it "doesn't change the mantissa of the original LargeFloat" do
-		one = create_one
-		two = multiply_by_two(one)
+		one = 1.to_lf
+		one * 2
 		one.mantissa.should eq(1.to_f)
 	end
 
@@ -153,97 +143,68 @@ describe LargeBinomials::LargeFloat, '#multiply_by_large_float' do
 end
 
 describe LargeBinomials::LargeFloat, '#divide_by_numeric' do
-	def create_one
-		LargeBinomials::LargeFloat.new(1)
-	end
-
-	def divide_by_two(lf)
-		lf / 2
-	end
-
 	it 'creates a new LargeFloat with the mantissa divided with the argument' do
-		one = create_one
-		two = divide_by_two(one)
-		two.mantissa.should eq(0.5)
+		(1.to_lf / 2).mantissa.should eq(0.5)
 	end
 
 	it "doesn't change the mantissa of the original LargeFloat" do
-		one = create_one
-		two = divide_by_two(one)
+		one = 1.to_lf
+		one / 2
 		one.mantissa.should eq(1.to_f)
 	end
 end
 
 describe LargeBinomials::LargeFloat, '#divide_by_large_float' do
-	def create_one
-		LargeBinomials::LargeFloat.new(1)
-	end
-
-	def divide_by_large_float_two(lf)
+	def divide_by_large_float_two_hundred(lf)
 		lf / LargeBinomials::LargeFloat.new(2, 2)
 	end
 
 	it "creates a new LargeFloat with the mantissa divided with the argument's mantissa" do
-		one = create_one
-		two = divide_by_large_float_two(one)
-		two.mantissa.should eq(0.5)
+		quotient = divide_by_large_float_two_hundred(1.to_lf)
+		quotient.mantissa.should eq(0.5)
 	end
 
 	it "creates a new LargeFloat with the exponent decremented with the argument's exponent" do
-		one = create_one
-		two = divide_by_large_float_two(one)
-		two.exponent.should eq(-2)
+		quotient = divide_by_large_float_two_hundred(1.to_lf)
+		quotient.exponent.should eq(-2)
 	end
 
 	it "doesn't change the mantissa of the original LargeFloat" do
-		one = create_one
-		two = divide_by_large_float_two(one)
+		one = 1.to_lf
+		divide_by_large_float_two_hundred(one)
 		one.mantissa.should eq(1.to_f)
 	end
 end
 
 describe LargeBinomials::LargeFloat, '#to_s' do
 	it 'converts 1 to a string as 1.0×10⁰' do
-		one = LargeBinomials::LargeFloat.new(1)
-		one.to_s.should eq('1.0×10⁰')
+		1.to_lf.to_s.should eq('1.0×10⁰')
 	end
 
 	it 'converts 10 to a string as 1.0×10¹' do
-		one = LargeBinomials::LargeFloat.new(10)
-		one.to_s.should eq('1.0×10¹')
+		10.to_lf.to_s.should eq('1.0×10¹')
 	end
 
 	it 'converts 1¹²³⁴⁵⁶⁷⁸⁹⁰ to a string as 1.0×10¹²³⁴⁵⁶⁷⁸⁹⁰' do
-		one = LargeBinomials::LargeFloat.new(1, 1234567890)
-		one.to_s.should eq('1.0×10¹²³⁴⁵⁶⁷⁸⁹⁰')
+		LargeBinomials::LargeFloat.new(1, 1234567890).to_s.should eq('1.0×10¹²³⁴⁵⁶⁷⁸⁹⁰')
 	end
 end
 
 describe LargeBinomials::LargeFloat, '#+' do
 	it 'creates a new LargeFloat with the same value as the first one when 0 is added' do
-		zero = LargeBinomials::LargeFloat.new(0)	
-		one = LargeBinomials::LargeFloat.new(1)
-		(one + zero).should eq(one)
+		(1.to_lf + 0.to_lf).should eq(1.to_lf)
 	end
 
 	it 'creates a new LargeFloat with the same value as the second one when added to 0' do
-		zero = LargeBinomials::LargeFloat.new(0)	
-		one = LargeBinomials::LargeFloat.new(1)
-		(zero + one).should eq(one)
+		(0.to_lf + 1.to_lf).should eq(1.to_lf)
 	end
 
 	it 'creates a new LargeFloat with the exponent of the largest LargeFloat if the second exponent is greater' do
-		one = LargeBinomials::LargeFloat.new(1)
-		ten = LargeBinomials::LargeFloat.new(1, 1)
-		eleven = one + ten
-		eleven.exponent.should eq(1)
+		(1.to_lf + LargeBinomials::LargeFloat.new(1, 1)).exponent.should eq(1)
 	end
 
 	it 'creates a new LargeFloat with the exponent of the largest LargeFloat if the first exponent is greater' do
-		one = LargeBinomials::LargeFloat.new(1)
-		ten = LargeBinomials::LargeFloat.new(1, 1)
-		eleven = ten + one
-		eleven.exponent.should eq(1)
+		(LargeBinomials::LargeFloat.new(1, 1) + 1.to_lf).exponent.should eq(1)
 	end
 
 	it 'creates a new LargeFloat with the exponent of the largest LargeFloat normalized if the second exponent is greater and in case of overflow' do
@@ -261,17 +222,11 @@ describe LargeBinomials::LargeFloat, '#+' do
 	end
 
 	it 'creates a new LargeFloat with the mantissa the sum of the mantissas relative to the exponents if the second exponent is greater' do
-		one = LargeBinomials::LargeFloat.new(1)
-		ten = LargeBinomials::LargeFloat.new(1, 1)
-		eleven = one + ten
-		eleven.mantissa.should eq(1.1)
+		(1.to_lf + LargeBinomials::LargeFloat.new(1, 1)).mantissa.should eq(1.1)
 	end
 
 	it 'creates a new LargeFloat with the mantissa the sum of the mantissas relative to the exponents if the first exponent is greater' do
-		one = LargeBinomials::LargeFloat.new(1)
-		ten = LargeBinomials::LargeFloat.new(1, 1)
-		eleven = ten + one
-		eleven.mantissa.should eq(1.1)
+		(LargeBinomials::LargeFloat.new(1, 1) + 1.to_lf).mantissa.should eq(1.1)
 	end
 
 	it 'creates a new LargeFloat with the mantissa the sum of the mantissas relative to the exponents normalized if the second exponent is greater and in case of overflow' do
@@ -291,41 +246,31 @@ describe LargeBinomials::LargeFloat, '#+' do
 	end
 
 	it 'creates a new LargeFloat equal to the first LargeFloat if the second is too small to be added' do
-		one = LargeBinomials::LargeFloat.new(1)
 		below_accuracy = LargeBinomials::LargeFloat.new(1, -Math.log10(Float::MAX).floor - 1)
-		(one + below_accuracy).should eq one
+		(1.to_lf + below_accuracy).should eq 1.to_lf
 	end
 
 	it 'creates a new LargeFloat equal to the first LargeFloat if the first is too small to be added' do
-		one = LargeBinomials::LargeFloat.new(1)
 		below_accuracy = LargeBinomials::LargeFloat.new(1, -Math.log10(Float::MAX).floor - 1)
-		(below_accuracy + one).should eq one
+		(below_accuracy + 1.to_lf).should eq 1.to_lf
 	end
 end
 
 describe LargeBinomials::LargeFloat, '#<=>' do
 	it 'returns 0 (equal) when mantissa and exponent are equal' do
-		first_one = LargeBinomials::LargeFloat.new(1)
-		second_one = LargeBinomials::LargeFloat.new(1)
-		(first_one == second_one).should be_true
+		(1.to_lf == 1.to_lf).should be_true
 	end
 
 	it 'returns 0 (equal) when mantissa and exponent are equal after normalization' do
-		first_ten = LargeBinomials::LargeFloat.new(0.1, 2)
-		second_ten = LargeBinomials::LargeFloat.new(10)
-		(first_ten == second_ten).should be_true
+		(LargeBinomials::LargeFloat.new(0.1, 2) == 10.to_lf).should be_true
 	end
 
 	it 'returns -1 (less than) when the first mantissa is smaller than the second, exponents being equal' do
-		one = LargeBinomials::LargeFloat.new(1)
-		two = LargeBinomials::LargeFloat.new(2)
-		(one < two).should be_true
+		(1.to_lf < 2.to_lf).should be_true
 	end
 
 	it 'returns -1 (less than) when the first exponent is smaller than the second' do
-		one = LargeBinomials::LargeFloat.new(1)
-		ten = LargeBinomials::LargeFloat.new(1, 1)
-		(one < ten).should be_true
+		(1.to_lf < LargeBinomials::LargeFloat.new(1, 1)).should be_true
 	end
 
 	it 'returns -1 (less than) when the first exponent is smaller than the second after normalization' do
