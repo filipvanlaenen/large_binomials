@@ -13,11 +13,9 @@ and larger.
 Installation
 ------------
 
-Do the following to install this gem:
+You can install this gem from RubyGems doing the following:
 
-1. Make a clone of the repository
-2. Build the gem: `gem build large_binomials.gemspec`
-3. Install the gem: `gem install ./large_binomials-0.9.gem`
+	gem install large_binomials
 
 Usage
 -----
