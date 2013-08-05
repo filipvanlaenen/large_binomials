@@ -188,6 +188,10 @@ describe LargeBinomials::LargeFloat, '#to_s' do
 	it 'converts 1¹²³⁴⁵⁶⁷⁸⁹⁰ to a string as 1.0×10¹²³⁴⁵⁶⁷⁸⁹⁰' do
 		LargeBinomials::LargeFloat.new(1, 1234567890).to_s.should eq('1.0×10¹²³⁴⁵⁶⁷⁸⁹⁰')
 	end
+
+	it 'converts 1¹²³⁴⁵⁶⁷⁸⁹⁰¹²³⁴⁵⁶⁷⁸⁹⁰ to a string as 1.0×10¹²³⁴⁵⁶⁷⁸⁹⁰¹²³⁴⁵⁶⁷⁸⁹⁰' do
+		LargeBinomials::LargeFloat.new(1, 12345678901234567890).to_s.should eq('1.0×10¹²³⁴⁵⁶⁷⁸⁹⁰¹²³⁴⁵⁶⁷⁸⁹⁰')
+	end
 end
 
 describe LargeBinomials::LargeFloat, '#+' do
