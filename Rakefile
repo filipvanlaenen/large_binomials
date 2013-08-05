@@ -38,7 +38,7 @@ desc 'Run Mutant'
 task :mutant do
 	require 'mutant'
 	find_integer_methods
-	status = Mutant::CLI.run(['::LargeBinomials*', find_integer_methods, '--rspec-unit'].flatten)
+	status = Mutant::CLI.run(['::LargeBinomials*', find_integer_methods, '--rspec'].flatten)
 	if status.nonzero?
 		abort 'Mutant task is not successful'
 	end
