@@ -76,6 +76,12 @@ describe LargeBinomials::LargeFloat, '#multiply_by_numeric' do
 		big_number_squared = big_number * 1E+300
 		big_number_squared.exponent.should eq(303)
 	end
+
+	it 'normalizes twice if needed' do
+		big_number = LargeBinomials::LargeFloat.new(2, 3)
+		big_number_squared = big_number * 1E+308
+		big_number_squared.should eq(LargeBinomials::LargeFloat.new(2, 311))
+	end
 	
 	it "doesn't change the exponent of the original LargeFloat in case of overflow" do
 		big_number = LargeBinomials::LargeFloat.new(1E+300, 3)
