@@ -191,6 +191,10 @@ describe LargeBinomials::LargeFloat, '#to_s' do
 		10.to_lf.to_s.should eq('1.0×10¹')
 	end
 
+	it 'converts 0.1 to a string as 1.0×10⁻¹' do
+		LargeBinomials::LargeFloat.new(1, -1).to_s.should eq('1.0×10⁻¹')
+	end
+
 	it 'converts 1¹²³⁴⁵⁶⁷⁸⁹⁰ to a string as 1.0×10¹²³⁴⁵⁶⁷⁸⁹⁰' do
 		LargeBinomials::LargeFloat.new(1, 1234567890).to_s.should eq('1.0×10¹²³⁴⁵⁶⁷⁸⁹⁰')
 	end
@@ -288,4 +292,10 @@ describe LargeBinomials::LargeFloat, '#<=>' do
 		ten = LargeBinomials::LargeFloat.new(1, 1)
 		(one < ten).should be_true
 	end
+end
+
+describe LargeBinomials::LargeFloat, '#normalize' do
+  it 'normalizes negative numbers' do
+    -1.to_lf.should eq LargeBinomials::LargeFloat.new(-1, 0)
+  end
 end

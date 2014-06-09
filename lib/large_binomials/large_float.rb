@@ -37,7 +37,7 @@ module LargeBinomials
 
     def normalize
       unless @mantissa == 0
-        normalization = Math.log10(@mantissa).floor
+        normalization = Math.log10(@mantissa.abs).floor
         @mantissa /= 10**normalization
         @exponent += normalization
       end
@@ -106,7 +106,7 @@ module LargeBinomials
       s = i.to_s
       s = s.gsub(/1/, '¹').gsub(/2/, '²').gsub(/3/, '³').gsub(/4/, '⁴')
       s = s.gsub(/5/, '⁵').gsub(/6/, '⁶').gsub(/7/, '⁷').gsub(/8/, '⁸')
-      s.gsub(/9/, '⁹').gsub(/0/, '⁰')
+      s.gsub(/9/, '⁹').gsub(/0/, '⁰').gsub(/-/, '⁻')
     end
 
     def to_s
