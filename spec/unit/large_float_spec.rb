@@ -285,13 +285,28 @@ describe LargeBinomials::LargeFloat, '#<=>' do
 
 	it 'returns -1 (less than) when the first exponent is smaller than the second' do
 		(1.to_lf < LargeBinomials::LargeFloat.new(1, 1)).should be_true
-	end
+  end
 
-	it 'returns -1 (less than) when the first exponent is smaller than the second after normalization' do
-		one = LargeBinomials::LargeFloat.new(0.01, 2)
-		ten = LargeBinomials::LargeFloat.new(1, 1)
-		(one < ten).should be_true
-	end
+  it 'returns -1 (less than) when the first exponent is smaller than the' \
+     ' second after normalization' do
+    one = LargeBinomials::LargeFloat.new(0.01, 2)
+    ten = LargeBinomials::LargeFloat.new(1, 1)
+    (one < ten).should be_true
+  end
+
+  it 'returns -1 (less than) when the first number is 0, and the second has' \
+     ' a negative exponent' do
+    zero = LargeBinomials::LargeFloat.new(0)
+    a_half = LargeBinomials::LargeFloat.new(5, -1)
+    (zero < a_half).should be_true
+  end
+
+  it 'returns +1 (greater than) when the second number is 0, and the first' \
+     ' has a negative exponent' do
+    zero = LargeBinomials::LargeFloat.new(0)
+    a_half = LargeBinomials::LargeFloat.new(5, -1)
+    (a_half < zero).should be_true
+  end
 end
 
 describe LargeBinomials::LargeFloat, '#normalize' do

@@ -117,7 +117,9 @@ module LargeBinomials
     def <=>(other)
       normalize
       other.normalize
-      if @exponent == other.exponent
+      if @mantissa == 0
+        - other.mantissa
+      elsif @exponent == other.exponent
         @mantissa - other.mantissa
       else
         @exponent - other.exponent
