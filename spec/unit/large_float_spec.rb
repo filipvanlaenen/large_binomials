@@ -268,6 +268,11 @@ describe LargeBinomials::LargeFloat, '#+' do
 		below_accuracy = LargeBinomials::LargeFloat.new(1, -Math.log10(Float::MAX).floor - 1)
 		(below_accuracy + 1.to_lf).should eq 1.to_lf
 	end
+
+  it 'can add unnormalized 0 to 0' do
+    unnormalized_zero = LargeBinomials::LargeFloat.new(0, 1215)
+    (0.to_lf + unnormalized_zero).should eq 0.to_lf
+  end
 end
 
 describe LargeBinomials::LargeFloat, '#<=>' do
