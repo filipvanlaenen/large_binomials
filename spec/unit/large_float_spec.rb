@@ -318,4 +318,8 @@ describe LargeBinomials::LargeFloat, '#normalize' do
   it 'normalizes negative numbers' do
     -1.to_lf.should eq LargeBinomials::LargeFloat.new(-1, 0)
   end
+
+  it 'normalizes zero' do
+    LargeBinomials::LargeFloat.new(0, 1215).should eq 0.to_lf
+  end
 end
